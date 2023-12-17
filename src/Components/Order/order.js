@@ -8,7 +8,7 @@ function Order({ customerName, pizzaType, orderTime, status,  street, city, stat
                 <p>Pizza Type: {pizzaType}</p>
                 <p>Order time: {orderTime}</p>
                 <p>Status: {status}</p>
-                <p>Customer: {customerName}<p/>
+                <p>Customer: {customerName}</p>
                 <p>Address: {street}, {city}, {state}, {zip}</p>
             </div>
         </div>

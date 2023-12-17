@@ -1,0 +1,39 @@
+/* Styling for the OrderPage component */
+.order-page {
+    padding-left: 5vw;
+    font-family: Arial, sans-serif;
+}
+
+/* Styling for each Order component */
+.order {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order .information {
+    margin-top: 10px;
+}
+
+.order .information p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Styling for headings */
+h3 {
+    color: #2a2a2a;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .order {
+        width: 100%;
+    }
+}

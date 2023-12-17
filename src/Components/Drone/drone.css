@@ -1,0 +1,45 @@
+/* General styling for the drone page */
+.drone-page {
+    padding-left: 5vw;
+    font-family: Arial, sans-serif;
+}
+
+/* Styling for the drone component */
+.drone {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px;
+    width: 300px;
+    display: inline-block; /* or flex */
+    background-color: #f9f9f9;
+}
+
+.drone_image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.information {
+    margin-top: 10px;
+}
+
+.information p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Styling for headings */
+h3 {
+    color: #2a2a2a;
+    font-size: 24px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .drone {
+        width: 100%;
+    }
+}

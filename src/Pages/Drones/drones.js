@@ -16,7 +16,7 @@ function DronePage() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:8080/dronora/drones');
+            const response = await fetch('http://localhost:8081/dronora/drones');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -34,7 +34,7 @@ function DronePage() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch('http://localhost:8080/dronora/drones', {
+            const response = await fetch('http://localhost:8081/dronora/drones', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,6 +53,25 @@ function DronePage() {
         }
     };
 
+    const handleStatusChange = async (droneId, newStatus) => {
+        try {
+            const response = await fetch(`http://localhost:8081/dronora/drones/${droneId}/status/${newStatus}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            fetchData(); // Refetch drones to update the UI
+        } catch (error) {
+            console.error('Error updating drone status:', error);
+        }
+    };
+
     return (
         <>
             <div>
@@ -64,12 +83,14 @@ function DronePage() {
                     <button type="submit">Create Drone</button>
                 </form>
                 <div>
-                    {drones && drones.map((drone, i) => (
+                    {drones && drones.map((drone) => (
                         <Drone
-                            key={i}
+                            key={drone.id}
+                            id={drone.id}
                             name={drone.name}
                             status={drone.status}
                             capacity={drone.capacity}
+                            onStatusChange={handleStatusChange}
                         />
                     ))}
                 </div>

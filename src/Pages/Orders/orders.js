@@ -1,4 +1,4 @@
-import Order from "../../Components/Drone/drone";
+import Order from "../../Components/Order/order";
 import { useState, useEffect } from "react";
 import "./orders.css";
 
@@ -11,7 +11,7 @@ function OrderPage() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8080/orders");
+      const response = await fetch("http://localhost:8081/orders");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -22,6 +22,23 @@ function OrderPage() {
     }
   };
 
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+        const response = await fetch(`http://localhost:8081/orders/${orderId}/status/${newStatus}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" }
+        });
+
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+
+        fetchData(); // Refetch orders to update the UI
+    } catch (error) {
+        console.error("Error updating order:", error);
+    }
+};
+
   return (
     <>
       <div>
@@ -31,6 +48,7 @@ function OrderPage() {
             orders.map((order, i) => (
               <Order
                 key={i}
+                id={order.id}
                 customerName={order.customerName}
                 pizzaType={order.pizzaType}
                 orderTime={order.orderTime}
@@ -39,6 +57,7 @@ function OrderPage() {
                 city={order.destination.city}
                 state={order.destination.state}
                 zip={order.destination.zip}
+                onStatusChange={handleStatusChange}
               />
             ))}
         </div>

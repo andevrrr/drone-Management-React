@@ -8,7 +8,7 @@ function Order({ id, customerName, pizzaType, orderTime, status, street, city, s
         onStatusChange(id, e.target.value);
     };
 
-    
+
 
     return (
         <div className='order'>

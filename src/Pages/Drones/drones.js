@@ -89,6 +89,7 @@ function DronePage() {
                             id={drone.id}
                             name={drone.name}
                             status={drone.status}
+                            statusUpdate={drone.statusUpdate}
                             capacity={drone.capacity}
                             onStatusChange={handleStatusChange}
                         />

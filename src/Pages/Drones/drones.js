@@ -16,7 +16,7 @@ function DronePage() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:8081/dronora/drones');
+            const response = await fetch('http://localhost:8083/drone');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -31,31 +31,9 @@ function DronePage() {
         setNewDrone({ ...newDrone, [event.target.name]: event.target.value });
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const response = await fetch('http://localhost:8081/dronora/drones', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newDrone)
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            fetchData();
-            setNewDrone({ name: '', capacity: '', status: '' }); // Reset form
-        } catch (error) {
-            console.error('POST error:', error);
-        }
-    };
-
     const handleStatusChange = async (droneId, newStatus) => {
         try {
-            const response = await fetch(`http://localhost:8081/dronora/drones/${droneId}/status/${newStatus}`, {
+            const response = await fetch(`http://localhost:8083/drone/${droneId}/status/${newStatus}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,12 +54,6 @@ function DronePage() {
         <>
             <div>
                 <h3 style={{ paddingLeft: '5vw' }}>Drones</h3>
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name="name" value={newDrone.name} onChange={handleChange} placeholder="Name" required />
-                    <input type="number" name="capacity" value={newDrone.capacity} onChange={handleChange} placeholder="Capacity" required />
-                    <input type="text" name="status" value={newDrone.status} onChange={handleChange} placeholder="Status" required />
-                    <button type="submit">Create Drone</button>
-                </form>
                 <div>
                     {drones && drones.map((drone) => (
                         <Drone

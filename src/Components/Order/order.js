@@ -13,6 +13,7 @@ function Order({ id, customerName, pizzaType, orderTime, status, street, city, s
     return (
         <div className='order'>
             <div className='information'>
+                <p>Order id: {id}</p>
                 <p>Pizza Type: {pizzaType}</p>
                 <p>Order time: {readableOrderTime}</p>
                 <select value={status} onChange={handleStatusChange}>

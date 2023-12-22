@@ -3,12 +3,7 @@ import { useState, useEffect } from 'react';
 import './drones.css';
 
 function DronePage() {
-    const [drones, setDrones] = useState(null);
-    const [newDrone, setNewDrone] = useState({
-        name: '',
-        capacity: '',
-        status: ''
-    });
+    const [drones, setDrones] = useState([]);
 
     useEffect(() => {
         fetchData();
@@ -16,34 +11,25 @@ function DronePage() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:8083/drone');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const jsonData = await response.json();
-            setDrones(jsonData);
+            const responses = await Promise.all([
+                fetch('http://localhost:8083/drone'),
+                fetch('http://localhost:8084/drone')
+            ]);
+            const jsonData = await Promise.all(responses.map(response => response.json()));
+            setDrones(jsonData.flat()); // Flatten the array as each response is an array
         } catch (error) {
             console.error('Fetch error:', error);
         }
     };
 
-    const handleChange = (event) => {
-        setNewDrone({ ...newDrone, [event.target.name]: event.target.value });
-    };
-
     const handleStatusChange = async (droneId, newStatus) => {
+        // Determine the correct port based on the droneId
+        const port = droneId === 1 ? 8083 : 8084;
+
         try {
-            const response = await fetch(`http://localhost:8083/drone/${droneId}/status/${newStatus}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
+            await fetch(`http://localhost:${port}/drone/status/${newStatus}`, {
+                method: 'PATCH'
             });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
             fetchData(); // Refetch drones to update the UI
         } catch (error) {
             console.error('Error updating drone status:', error);
@@ -55,7 +41,7 @@ function DronePage() {
             <div>
                 <h3 style={{ paddingLeft: '5vw' }}>Drones</h3>
                 <div>
-                    {drones && drones.map((drone) => (
+                    {drones.map(drone => (
                         <Drone
                             key={drone.id}
                             id={drone.id}

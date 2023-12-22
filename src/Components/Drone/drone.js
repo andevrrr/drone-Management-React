@@ -1,5 +1,5 @@
 import './drone.css';
-import drone from '../../images/drone.png';
+import droneImage from '../../images/drone.png';
 
 function Drone({ id, name, status, statusUpdate, capacity, onStatusChange }) {
 
@@ -9,14 +9,14 @@ function Drone({ id, name, status, statusUpdate, capacity, onStatusChange }) {
 
     return (
         <div className='drone'>
-            <img src={drone} className='drone_image' alt="droneImage" />
+            <img src={droneImage} className='drone_image' alt="drone" />
             <div className='information'>
                 <p>Name: {name}</p>
                 <p>Capacity: {capacity}</p>
                 <p>Availability: {status}</p>
                 <p>Status: {statusUpdate}</p>
                 <select value={statusUpdate} onChange={handleStatusChange}>
-                    <option value="Available">Picking up</option>
+                    <option value="Picking up">Picking up</option>
                     <option value="Picked up">Picked up</option>
                     <option value="In Delivery">In Delivery</option>
                     <option value="Arrived">Arrived</option>
@@ -29,3 +29,4 @@ function Drone({ id, name, status, statusUpdate, capacity, onStatusChange }) {
 }
 
 export default Drone;
+
